@@ -22,4 +22,7 @@ public class BuyItemConstant {
 	public static final String LOGGING_HANDLER_PROCESS_TIME_MSG = "Total processing time [%s] ms";
 
     public static final String STOCK_NOT_AVAILABLE_MSG = "Item {%s} not available in stock";
+    public static final String INVALID_QUANTITY_MSG = "The quantity provided for restock should be greater then zero";
+	public static final String NULL_ITEM_MESSAGE_MSG = "This item is null";
+    public static final String USER_NOT_FOUND_MESSAGE_MSG = "Could not found a user with id {%d}";
 }
