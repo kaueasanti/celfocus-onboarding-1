@@ -10,6 +10,7 @@ import com.training.springbootbuyitem.entity.response.*;
 import com.training.springbootbuyitem.service.ItemService;
 import com.training.springbootbuyitem.service.UserService;
 import com.training.springbootbuyitem.utils.annotation.ServiceOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -29,6 +30,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RefreshScope
 @RestController
 @RequestMapping("/buy")
@@ -64,6 +66,7 @@ public class BuyController implements IBuyController {
 	@GetMapping("/{id}")
 	@ServiceOperation("getItem")
 	public ResponseEntity<GetItemResponseDto> getItem(@PathVariable("id") Long id) {
+			log.info("It's working!!!");
 			return new ResponseEntity<>(mapper.map(itemService.get(id), GetItemResponseDto.class), HttpStatus.OK);
 	}
 

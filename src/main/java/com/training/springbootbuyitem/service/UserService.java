@@ -1,32 +1,31 @@
 package com.training.springbootbuyitem.service;
 
+import com.training.springbootbuyitem.entity.model.Item;
 import com.training.springbootbuyitem.entity.model.User;
 import com.training.springbootbuyitem.enums.EnumEntity;
 import com.training.springbootbuyitem.error.EntityNotFoundException;
 
+import com.training.springbootbuyitem.error.NullObjectException;
+import com.training.springbootbuyitem.error.UserNotFoundException;
 import com.training.springbootbuyitem.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserService implements IUserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    /**
-     * @JavaDoc RestTemplate is a synchronous Http Client which is supported by Pivotal development team take into
-     * consideration this client is deprecated and shall not be supported for LTS use instead the newly Http Client
-     * WebClient which is capable of synchronous & asynchronous invocations check some code samples at:
-     * https://spring.io/guides/gs/consuming-rest/
-     */
-    @Autowired
-    private RestTemplate restTemplate;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> list() {
@@ -35,8 +34,10 @@ public class UserService implements IUserService {
 
     @Override
     public User get(Long id) {
+        log.info("Getting user");
         return userRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(EnumEntity.USER.name(), id));
+
     }
 
     @Override
@@ -46,24 +47,41 @@ public class UserService implements IUserService {
 
     @Override
     public void delete(Long id) {
-        userRepository.delete(get(id));
+        try {
+            userRepository.delete(get(id));
+        } catch (UserNotFoundException e) {
+        }
     }
-
 
     @Override
     public User update(User user) {
-        User persistedUser = get(user.getUserUid());
-        if (!StringUtils.isEmpty(user.getName())) {
-            persistedUser.setName(user.getName());
+        if (user != null) {
+            User persistedUser = get(user.getUserUid());
+            if (!StringUtils.isEmpty(user.getName())) {
+                persistedUser.setName(user.getName());
+            }
+            if (!StringUtils.isEmpty(user.getEmail())) {
+                persistedUser.setEmail(user.getEmail());
+            }
+            userRepository.save(persistedUser);
         }
-        if (!StringUtils.isEmpty(user.getEmail())) {
-            persistedUser.setEmail(user.getEmail());
+        throw new NullObjectException();
+    }
+
+    @Override
+    public void updateUserItems(User user, String cart) {
+        if (user != null && cart != null) {
+            user.cart = cart;
+            userRepository.save(user);
         }
-        return userRepository.save(persistedUser);
+        throw new NullObjectException();
     }
 
     @Override
     public User save(User user) {
-        return userRepository.save(user);
+        if (user != null) {
+            userRepository.save(user);
+        }
+        throw new NullObjectException();
     }
 }

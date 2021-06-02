@@ -4,9 +4,12 @@ import com.training.springbootbuyitem.entity.model.Item;
 import com.training.springbootbuyitem.enums.EnumEntity;
 import com.training.springbootbuyitem.enums.EnumItemState;
 import com.training.springbootbuyitem.error.EntityNotFoundException;
+import com.training.springbootbuyitem.error.InvalidQuantityException;
+import com.training.springbootbuyitem.error.NullObjectException;
 import com.training.springbootbuyitem.error.StockNotAvailableException;
 import com.training.springbootbuyitem.repository.ItemRepository;
 import com.training.springbootbuyitem.utils.properties.ItemStorageProperties;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -16,6 +19,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ItemService implements IItemService {
 
@@ -79,35 +83,57 @@ public class ItemService implements IItemService {
 
 	@Override
 	public Item save(Item item) {
-		item.setState(EnumItemState.AVAILABLE.name());
-		return itemRepository.save(item);
+		if (item != null) {
+			item.setState(EnumItemState.AVAILABLE.name());
+			return itemRepository.save(item);
+		}
+		throw new NullObjectException() ;
 	}
 
 	@Override
 	public void restock(Long id, Integer quantity) {
-		// TODO
+		if (quantity > 0) {
+			Item item = get(id);
+			item.setStock(item.getStock().add(BigInteger.valueOf(quantity)));
+			item.setState(EnumItemState.AVAILABLE.name());
+			save(item);
+		} else {
+			throw new InvalidQuantityException();
+		}
 	}
 
 	@Override
 	public void dispatch(Long id, Integer quantity) {
-		Item item = get(id);
-		checkItemAvailability(item, quantity);
-		item.setStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
-		item.setReservedStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
-		save(item);
+		if (quantity > 0) {
+			Item item = get(id);
+			checkItemAvailability(item, quantity);
+			item.setStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
+			item.setReservedStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
+			save(item);
+			if (item.getStock().compareTo(BigInteger.valueOf(quantity)) == 0) {
+				item.setState(EnumItemState.RESTOCK.name());
+			}
+		} else {
+			throw new InvalidQuantityException();
+		}
+
 	}
 
 	private void checkItemAvailability(Item item, Integer quantity) {
-		/*if (item.getStock().compareTo(BigInteger.valueOf(quantity)) < 0) {
+		if (item.getStock().compareTo(BigInteger.valueOf(quantity)) < 0) {
 			throw new StockNotAvailableException(item.getName());
-		}*/
+		}
 	}
 
 	@Override
 	public void block(Long id, Integer quantity) {
-		Item item = get(id);
-		item.setStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
-		item.setReservedStock(item.getReservedStock().add(BigInteger.valueOf(quantity)));
-		save(item);
+		if (quantity > 0) {
+			Item item = get(id);
+			item.setStock(item.getStock().subtract(BigInteger.valueOf(quantity)));
+			item.setReservedStock(item.getReservedStock().add(BigInteger.valueOf(quantity)));
+			save(item);
+		} else {
+			throw new InvalidQuantityException();
+		}
 	}
 }
