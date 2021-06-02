@@ -98,9 +98,9 @@ public class ItemService implements IItemService {
 	}
 
 	private void checkItemAvailability(Item item, Integer quantity) {
-		if (item.getStock().compareTo(BigInteger.valueOf(quantity)) < 0) {
+		/*if (item.getStock().compareTo(BigInteger.valueOf(quantity)) < 0) {
 			throw new StockNotAvailableException(item.getName());
-		}
+		}*/
 	}
 
 	@Override

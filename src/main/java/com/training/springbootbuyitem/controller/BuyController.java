@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 @RefreshScope
 @RestController
+@RequestMapping("/buy")
 public class BuyController implements IBuyController {
 
 	@Autowired
@@ -58,19 +59,6 @@ public class BuyController implements IBuyController {
 			return new ResponseEntity<>(mapper.map(itemService.save(mapper.map(request, Item.class)), CreateItemResponseDto.class), HttpStatus.CREATED);
 	}
 
-	@Override
-	@PostMapping("/createUser")
-	@ServiceOperation("createUser")
-	public ResponseEntity<CreateUserResponseDto> createUser(@RequestBody @Valid CreateUserRequestDto request) {
-		return new ResponseEntity<>(mapper.map(userService.save(mapper.map(request, User.class)), CreateUserResponseDto.class), HttpStatus.CREATED);
-	}
-
-	@Override
-	@GetMapping("/user/{id}")
-	@ServiceOperation("getUser")
-	public ResponseEntity<GetUserResponseDto> getUser(@PathVariable("id") Long id) {
-		return new ResponseEntity<>(mapper.map(userService.get(id), GetUserResponseDto.class), HttpStatus.OK);
-	}
 
 	@Override
 	@GetMapping("/{id}")
@@ -88,14 +76,6 @@ public class BuyController implements IBuyController {
 	}
 
 	@Override
-	@PatchMapping("/user/{id}")
-	@ServiceOperation("updateUser")
-	public ResponseEntity<UpdateUserResponseDto> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
-		user.setUserUid(id);
-		return new ResponseEntity<>(mapper.map(userService.update(user), UpdateUserResponseDto.class), HttpStatus.OK);
-	}
-
-	@Override
 	@DeleteMapping("/{id}")
 	@ServiceOperation("deleteItem")
 	public ResponseEntity<HttpStatus> deleteItem(@PathVariable("id") Long id) {
@@ -104,26 +84,10 @@ public class BuyController implements IBuyController {
 	}
 
 	@Override
-	@DeleteMapping("/{id}")
-	@ServiceOperation("deleteUser")
-	public ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id) {
-		userService.delete(id);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	@Override
 	@GetMapping("/all")
 	@ServiceOperation("listItems")
 	public ResponseEntity<List<GetItemResponseDto>> listItems() {
 		return new ResponseEntity<>(itemService.list().stream().map(i -> mapper.map(i, GetItemResponseDto.class)).collect(
-				Collectors.toList()), HttpStatus.OK);
-	}
-
-	@Override
-	@GetMapping("/user/all")
-	@ServiceOperation("listUsers")
-	public ResponseEntity<List<GetUserResponseDto>> listUsers() {
-		return new ResponseEntity<>(userService.list().stream().map(i -> mapper.map(i, GetUserResponseDto.class)).collect(
 				Collectors.toList()), HttpStatus.OK);
 	}
 
