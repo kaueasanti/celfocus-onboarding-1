@@ -9,8 +9,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Proxy(lazy = false)
 @Entity
@@ -30,11 +30,26 @@ public class User extends Auditable {
     private String password;
     public String cart;
     private BigDecimal credit;
-    /*@OneToMany(mappedBy = "user")
-    private List<Item> items = new ArrayList<>();*/
+    @OneToMany(mappedBy = "user")
+    private Map<Long, CartItem> cartItems = new HashMap<>();
 
     public User(String name){
         this.name = name;
+    }
+
+    public void addOrUpdateItemToCart(Item item, Long quantity) {
+        CartItem cartItem;
+        if (cartItems.containsKey(item.getItemUid())) {
+            cartItem = cartItems.get(item.getItemUid());
+            cartItem.setQuantity(quantity);
+        } else {
+            cartItem = new CartItem(quantity, item);
+        }
+        cartItems.put(item.getItemUid(), cartItem);
+    }
+
+    public void removeItemFromCart (Item item) {
+        cartItems.remove(item.getItemUid());
     }
 
 }

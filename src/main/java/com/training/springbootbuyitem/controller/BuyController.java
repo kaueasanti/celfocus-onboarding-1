@@ -58,7 +58,11 @@ public class BuyController implements IBuyController {
 	@PostMapping("/createItem")
 	@ServiceOperation("createItem")
 	public ResponseEntity<CreateItemResponseDto> createItem(@RequestBody @Valid CreateItemRequestDto request) {
+		try {
 			return new ResponseEntity<>(mapper.map(itemService.save(mapper.map(request, Item.class)), CreateItemResponseDto.class), HttpStatus.CREATED);
+		} catch (Exception e) {
+			throw new
+		}
 	}
 
 
