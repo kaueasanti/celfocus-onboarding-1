@@ -17,7 +17,7 @@ import javax.persistence.EntityListeners;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class CartItem {
+public class CartItem extends Auditable  {
     private Long quantity;
     private Item item;
 
