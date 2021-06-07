@@ -58,7 +58,6 @@ public class BuyController implements IBuyController {
 	@GetMapping("/{id}")
 	@ServiceOperation("getItem")
 	public ResponseEntity<GetItemResponseDto> getItem(@PathVariable("id") Long id) {
-		log.info("It's working!!!");
 		return new ResponseEntity<>(mapper.map(itemService.get(id), GetItemResponseDto.class), HttpStatus.OK);
 	}
 
@@ -67,15 +66,15 @@ public class BuyController implements IBuyController {
 	@ServiceOperation("updateItem")
 	public ResponseEntity<UpdateItemResponseDto> updateItem(@PathVariable("id") Long id, @RequestBody Item item) {
 		item.setItemUid(id);
-			return new ResponseEntity<>(mapper.map(itemService.update(item), UpdateItemResponseDto.class), HttpStatus.OK);
+		return new ResponseEntity<>(mapper.map(itemService.update(item), UpdateItemResponseDto.class), HttpStatus.OK);
 	}
 
 	@Override
 	@DeleteMapping("/{id}")
 	@ServiceOperation("deleteItem")
 	public ResponseEntity<HttpStatus> deleteItem(@PathVariable("id") Long id) {
-			itemService.delete(id);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		itemService.delete(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@Override
@@ -102,7 +101,6 @@ public class BuyController implements IBuyController {
 			@RequestBody DispatchItemRequestDto request) {
 			itemService.block(id, request.getQuantity());
 			return new ResponseEntity<>(HttpStatus.OK);
-
 	}
 
 	@Override

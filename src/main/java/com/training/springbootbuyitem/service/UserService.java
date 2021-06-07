@@ -60,9 +60,6 @@ public class UserService implements IUserService {
             if (!StringUtils.isEmpty(user.getName())) {
                 persistedUser.setName(user.getName());
             }
-            if (!StringUtils.isEmpty(user.getEmail())) {
-                persistedUser.setEmail(user.getEmail());
-            }
             userRepository.save(persistedUser);
         }
         throw new NullObjectException();
