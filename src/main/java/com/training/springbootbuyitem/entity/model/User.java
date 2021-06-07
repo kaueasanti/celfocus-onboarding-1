@@ -26,15 +26,9 @@ public class User extends Auditable {
     private Long userUid;
     @Column(unique = true)
     private String name;
-    private String email;
     private String password;
-    public String cart;
     private BigDecimal credit;
-    /*@OneToMany(mappedBy = "user")
-    private List<Item> items = new ArrayList<>();*/
-
-    public User(String name){
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "user")
+    private List<Item> items = new ArrayList<>();
 
 }

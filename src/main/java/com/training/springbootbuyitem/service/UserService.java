@@ -59,21 +59,14 @@ public class UserService implements IUserService {
             if (!StringUtils.isEmpty(user.getName())) {
                 persistedUser.setName(user.getName());
             }
-            if (!StringUtils.isEmpty(user.getEmail())) {
-                persistedUser.setEmail(user.getEmail());
-            }
             userRepository.save(persistedUser);
         }
         throw new NullObjectException();
     }
 
     @Override
-    public void updateUserItems(User user, String cart) {
-        if (user != null && cart != null) {
-            user.cart = cart;
-            userRepository.save(user);
-        }
-        throw new NullObjectException();
+    public void updateUserItems(User user, List<Item> items) {
+        items.stream().forEach(item -> update(user));
     }
 
     @Override
