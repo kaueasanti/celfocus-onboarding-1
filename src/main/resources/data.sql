@@ -12,6 +12,6 @@ insert into user(name, email, password) values ('Eli Magrath', 'eli20new@amail.c
 
 -- insert into transaction(transaction_uid, item_uid, user_uid, quantity, total) values (1, 2, 2, 2, 10);
 
--- password:
+-- password: johnsmith
 -- password: anaduarte
 -- password: elimagrath
