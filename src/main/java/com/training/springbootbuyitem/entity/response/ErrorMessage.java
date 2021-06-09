@@ -2,8 +2,6 @@ package com.training.springbootbuyitem.entity.response;
 
 import lombok.Data;
 
-import javax.validation.constraints.AssertFalse;
-
 @Data
 public class ErrorMessage {
 
