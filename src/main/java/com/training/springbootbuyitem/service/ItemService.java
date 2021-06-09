@@ -10,6 +10,7 @@ import com.training.springbootbuyitem.repository.ItemRepository;
 import com.training.springbootbuyitem.utils.properties.ItemStorageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
@@ -42,12 +43,14 @@ public class ItemService implements IItemService {
         return itemRepository.findAll();
     }
 
+    @Cacheable("item")
     @Override
     public Item get(Long id) {
         return itemRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(EnumEntity.ITEM.name(), id));
     }
 
+    @Cacheable("item")
     @Override
     public List<Item> get(List<Long> id) {
         return new ArrayList<>();
