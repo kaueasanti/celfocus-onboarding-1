@@ -32,9 +32,9 @@ public class Item extends Auditable {
 	private BigDecimal priceTag;
 	private BigInteger reservedStock;
 
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name="userUID")
-	private User user;
+	private User user;*/
 
 	public Item(String name){
 		this.name = name;

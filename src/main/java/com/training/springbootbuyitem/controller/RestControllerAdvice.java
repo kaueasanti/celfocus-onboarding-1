@@ -38,7 +38,8 @@ public class RestControllerAdvice {
 	}
 
 	private ResponseEntity<ErrorMessage> buildErrorMessageResponseEntity(String msg, HttpStatus httpStatus) {
-		log.error(msg);
+		/*return new ResponseEntity(msg, httpStatus);*/
+		log.info(msg);
 		return new ResponseEntity<>(
 				new ErrorMessage.Builder()
 						.message(msg)

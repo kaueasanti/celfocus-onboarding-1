@@ -5,14 +5,12 @@ import com.training.springbootbuyitem.entity.model.User;
 import com.training.springbootbuyitem.enums.EnumEntity;
 import com.training.springbootbuyitem.error.EmailNotValid;
 import com.training.springbootbuyitem.error.EntityNotFoundException;
-
 import com.training.springbootbuyitem.error.NullObjectException;
 import com.training.springbootbuyitem.error.UserNotFoundException;
 import com.training.springbootbuyitem.repository.UserRepository;
 import com.training.springbootbuyitem.utils.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -40,7 +38,6 @@ public class UserService implements IUserService {
         log.info("Getting user");
         return userRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(EnumEntity.USER.name(), id));
-
     }
 
     @Override
