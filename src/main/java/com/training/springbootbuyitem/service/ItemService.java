@@ -43,14 +43,12 @@ public class ItemService implements IItemService {
         return itemRepository.findAll();
     }
 
-    @Cacheable("item")
     @Override
     public Item get(Long id) {
         return itemRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(EnumEntity.ITEM.name(), id));
     }
 
-    @Cacheable("item")
     @Override
     public List<Item> get(List<Long> id) {
         return new ArrayList<>();

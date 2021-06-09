@@ -33,7 +33,6 @@ public class UserService implements IUserService {
         return userRepository.findAll();
     }
 
-    @Cacheable("user")
     @Override
     public User get(Long id) {
         log.info("Getting user");
@@ -42,7 +41,6 @@ public class UserService implements IUserService {
 
     }
 
-    @Cacheable("user")
     @Override
     public List<User> get(List<Long> id) {
         return new ArrayList<>();
