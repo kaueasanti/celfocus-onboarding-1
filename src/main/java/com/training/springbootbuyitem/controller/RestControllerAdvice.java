@@ -3,9 +3,8 @@ package com.training.springbootbuyitem.controller;
 import com.training.springbootbuyitem.constant.ItemStorageConstant;
 import com.training.springbootbuyitem.entity.response.ErrorMessage;
 import com.training.springbootbuyitem.error.EntityNotFoundException;
-import com.training.springbootbuyitem.error.NullObjectException;
-import com.training.springbootbuyitem.service.ICrudService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,11 +40,11 @@ public class RestControllerAdvice {
 		/*return new ResponseEntity(msg, httpStatus);*/
 		log.info(msg);
 		return new ResponseEntity<>(
-				new ErrorMessage.Builder()
+				ErrorMessage.builder()
 						.message(msg)
 						.code(httpStatus.value())
-						.traceId(ItemStorageConstant.TRACE_ID)
-						.operation(ItemStorageConstant.OPERATION)
+						.traceId(MDC.get(ItemStorageConstant.TRACE_ID))
+						.operation(MDC.get(ItemStorageConstant.OPERATION))
 						.build(),
 				httpStatus);
 	}
