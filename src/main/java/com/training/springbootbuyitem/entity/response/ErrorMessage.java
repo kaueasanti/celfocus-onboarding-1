@@ -2,6 +2,8 @@ package com.training.springbootbuyitem.entity.response;
 
 import lombok.Data;
 
+import javax.validation.constraints.AssertFalse;
+
 @Data
 public class ErrorMessage {
 
@@ -11,23 +13,25 @@ public class ErrorMessage {
 		private int code;
 		private String message;
 
-		public Builder(String traceId) {
+		public Builder traceId (String traceId) {
 			this.traceId = traceId;
+
+			return this;
 		}
 
-		public Builder onOperation(String operation) {
+		public Builder operation(String operation) {
 			this.operation = operation;
 
 			return this;
 		}
 
-		public Builder withCode(int code) {
+		public Builder code(int code) {
 			this.code = code;
 
 			return this;
 		}
 
-		public Builder withMessage(String message) {
+		public Builder message(String message) {
 			this.message = message;
 
 			return this;
@@ -35,10 +39,6 @@ public class ErrorMessage {
 
 		public ErrorMessage build() {
 			ErrorMessage errorMessage = new ErrorMessage();
-			errorMessage.traceId = this.traceId;
-			errorMessage.operation = this.operation;
-			errorMessage.code = this.code;
-			errorMessage.message = this.message;
 
 			return errorMessage;
 		}
