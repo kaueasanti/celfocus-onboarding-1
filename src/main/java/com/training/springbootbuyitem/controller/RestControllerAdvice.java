@@ -35,10 +35,16 @@ public class RestControllerAdvice {
 	}
 
 	private ResponseEntity<ErrorMessage> buildErrorMessageResponseEntity(String msg, HttpStatus httpStatus) {
-
-		log.info(msg);
-		return new ResponseEntity(msg, httpStatus);
-
+		log.error(msg);
+		return new ResponseEntity<>(
+				ErrorMessage.builder()
+						.message(msg)
+						.code(httpStatus.value())
+						.traceId(MDC.get(ItemStorageConstant.TRACE_ID))
+						.operation(MDC.get(ItemStorageConstant.OPERATION))
+						.build(),
+				httpStatus);
+		throw new NotImplementedException();
 	}
 
 }

@@ -1,44 +1,48 @@
 package com.training.springbootbuyitem.entity.response;
 
+import lombok.Data;
+
+@Data
 public class ErrorMessage {
 
-	public ErrorMessage(){}
+	public static class Builder{
+		private String traceId;
+		private String operation;
+		private int code;
+		private String message;
 
-	private String traceId;
-	private String operation;
-	private int code;
-	private String message;
+		public Builder(String traceId) {
+			this.traceId = traceId;
+		}
 
+		public Builder onOperation(String operation) {
+			this.operation = operation;
 
-	public String getTraceId() {
-		return traceId;
+			return this;
+		}
+
+		public Builder withCode(int code) {
+			this.code = code;
+
+			return this;
+		}
+
+		public Builder withMessage(String message) {
+			this.message = message;
+
+			return this;
+		}
+
+		public ErrorMessage build() {
+			ErrorMessage errorMessage = new ErrorMessage();
+			errorMessage.traceId = this.traceId;
+			errorMessage.operation = this.operation;
+			errorMessage.code = this.code;
+			errorMessage.message = this.message;
+
+			return errorMessage;
+		}
 	}
 
-	public void setTraceId(String traceId) {
-		this.traceId = traceId;
-	}
-
-	public String getOperation() {
-		return operation;
-	}
-
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
+	private ErrorMessage() {}
 }
