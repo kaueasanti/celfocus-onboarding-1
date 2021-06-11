@@ -43,8 +43,8 @@ public class RestControllerAdvice {
 				ErrorMessage.builder()
 						.message(msg)
 						.code(httpStatus.value())
-						.traceId(MDC.get(ItemStorageConstant.TRACE_ID))
-						.operation(MDC.get(ItemStorageConstant.OPERATION))
+						.traceId(ItemStorageConstant.TRACE_ID)
+						.operation(ItemStorageConstant.OPERATION)
 						.build(),
 				httpStatus);
 	}
