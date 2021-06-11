@@ -3,12 +3,10 @@ package com.training.springbootbuyitem.service;
 import com.training.springbootbuyitem.entity.model.Item;
 import com.training.springbootbuyitem.entity.model.User;
 import com.training.springbootbuyitem.enums.EnumEntity;
-import com.training.springbootbuyitem.error.EmailNotValid;
 import com.training.springbootbuyitem.error.EntityNotFoundException;
 import com.training.springbootbuyitem.error.NullObjectException;
 import com.training.springbootbuyitem.error.UserNotFoundException;
 import com.training.springbootbuyitem.repository.UserRepository;
-import com.training.springbootbuyitem.utils.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,9 +64,6 @@ public class UserService implements IUserService {
             if (!StringUtils.isEmpty(user.getPassword())) {
                 persistedUser.setPassword(user.getPassword());
             }
-            if (!Validator.validateEmail(user.getEmail())) {
-                throw new EmailNotValid(user.getEmail());
-            }
             return userRepository.save(persistedUser);
         }
         throw new NullObjectException();
@@ -76,18 +71,12 @@ public class UserService implements IUserService {
 
     @Override
     public void updateUserItems(User user, List<Item> items) {
-        if (!Validator.validateEmail(user.getEmail())) {
-            throw new EmailNotValid(user.getEmail());
-        }
         items.stream().forEach(item -> update(user));
     }
 
     @Override
     public User save(User user) {
         if (user != null) {
-            if (!Validator.validateEmail(user.getEmail())) {
-                throw new EmailNotValid(user.getEmail());
-            }
             return userRepository.save(user);
         }
         throw new NullObjectException();

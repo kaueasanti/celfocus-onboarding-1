@@ -1,5 +1,7 @@
 package com.training.springbootbuyitem.entity.model;
 
+import com.training.springbootbuyitem.utils.validators.EmailConstraint;
+import com.training.springbootbuyitem.utils.validators.PasswordConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +28,9 @@ public class User extends Auditable {
     private Long userUid;
     @Column(unique = true)
     private String name;
+    @EmailConstraint
     private String email;
+    @PasswordConstraint
     private String password;
     /*@OneToMany(mappedBy = "user")
     private List<Item> items = new ArrayList<>();*/
