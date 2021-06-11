@@ -47,12 +47,11 @@ public class BuyController implements IBuyController {
 	private ModelMapper mapper;
 
 	@Override
-	@PostMapping("/createItem")
+	@PostMapping("/create")
 	@ServiceOperation("createItem")
 	public ResponseEntity<CreateItemResponseDto> createItem(@RequestBody @Valid CreateItemRequestDto request) {
 		return new ResponseEntity<>(mapper.map(itemService.save(mapper.map(request, Item.class)), CreateItemResponseDto.class), HttpStatus.CREATED);
 	}
-
 
 	@Override
 	@GetMapping("/{id}")

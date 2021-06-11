@@ -29,12 +29,6 @@ public class ItemService implements IItemService {
     @Autowired
     private ItemStorageProperties itemStorageProperties;
 
-    /**
-     * @JavaDoc RestTemplate is a synchronous Http Client which is supported by Pivotal development team take into
-     * consideration this client is deprecated and shall not be supported for LTS use instead the newly Http Client
-     * WebClient which is capable of synchronous & asynchronous invocations check some code samples at:
-     * https://spring.io/guides/gs/consuming-rest/
-     */
     @Autowired
     private RestTemplate restTemplate;
 

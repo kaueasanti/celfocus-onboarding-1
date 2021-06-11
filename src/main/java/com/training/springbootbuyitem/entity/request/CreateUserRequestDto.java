@@ -18,5 +18,6 @@ public class CreateUserRequestDto {
     @NotEmpty
     @Getter @Setter private String name;
     @Getter @Setter private String email;
+    @Getter @Setter private String password;
 
 }
