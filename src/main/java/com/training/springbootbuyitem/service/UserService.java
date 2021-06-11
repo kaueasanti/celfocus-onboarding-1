@@ -63,10 +63,13 @@ public class UserService implements IUserService {
             if (!StringUtils.isEmpty(user.getEmail())) {
                 persistedUser.setEmail(user.getEmail());
             }
+            if (!StringUtils.isEmpty(user.getPassword())) {
+                persistedUser.setPassword(user.getPassword());
+            }
             if (!Validator.validateEmail(user.getEmail())) {
                 throw new EmailNotValid(user.getEmail());
             }
-            userRepository.save(persistedUser);
+            return userRepository.save(persistedUser);
         }
         throw new NullObjectException();
     }
@@ -85,7 +88,7 @@ public class UserService implements IUserService {
             if (!Validator.validateEmail(user.getEmail())) {
                 throw new EmailNotValid(user.getEmail());
             }
-            userRepository.save(user);
+            return userRepository.save(user);
         }
         throw new NullObjectException();
     }
