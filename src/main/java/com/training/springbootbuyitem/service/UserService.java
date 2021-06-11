@@ -9,7 +9,6 @@ import com.training.springbootbuyitem.error.UserNotFoundException;
 import com.training.springbootbuyitem.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -32,7 +31,6 @@ public class UserService implements IUserService {
         return userRepository.findAll();
     }
 
-    @Cacheable("user")
     @Override
     public User get(Long id) {
         log.info("Getting user");
@@ -40,7 +38,6 @@ public class UserService implements IUserService {
                 new EntityNotFoundException(EnumEntity.USER.name(), id));
     }
 
-    @Cacheable("user")
     @Override
     public List<User> get(List<Long> id) {
         return new ArrayList<>();
