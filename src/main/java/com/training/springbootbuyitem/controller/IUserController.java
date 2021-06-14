@@ -38,7 +38,11 @@ public interface IUserController {
     @ServiceOperation("deleteUser")
     ResponseEntity<HttpStatus> deleteUser(@PathVariable("id") Long id);
 
-    @GetMapping
+    @GetMapping("/user/all")
     @ServiceOperation("listUsers")
     ResponseEntity<List<GetUserResponseDto>> listUsers();
+
+    @GetMapping("/user/{id}/items")
+    @ServiceOperation("listUserItems")
+    ResponseEntity<List<GetUserResponseDto>> listUserItems(@PathVariable("id") Long id);
 }

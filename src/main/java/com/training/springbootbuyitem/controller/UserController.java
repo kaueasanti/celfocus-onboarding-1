@@ -80,4 +80,12 @@ public class UserController implements IUserController {
         return new ResponseEntity<>(userService.list().stream().map(i -> mapper.map(i, GetUserResponseDto.class)).collect(
                 Collectors.toList()), HttpStatus.OK);
     }
+
+    @Override
+    @GetMapping("/{id}/items")
+    @ServiceOperation("listUserItems")
+    public ResponseEntity<List<GetUserResponseDto>> listUserItems(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.listUserItems(id).stream().map(i -> mapper.map(i, GetUserResponseDto.class)).collect(
+                Collectors.toList()), HttpStatus.OK);
+    }
 }

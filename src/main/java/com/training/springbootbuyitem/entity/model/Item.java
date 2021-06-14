@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Proxy(lazy = false)
 @Entity
@@ -18,6 +20,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="Item")
 public class Item extends Auditable {
 
 	@Id
@@ -31,6 +34,9 @@ public class Item extends Auditable {
 	private BigInteger stock;
 	private BigDecimal priceTag;
 	private BigInteger reservedStock;
+	@ManyToOne
+	@JoinColumn(name="user_uid", nullable=false)
+	private User user;
 
 	public Item(String name){
 		this.name = name;

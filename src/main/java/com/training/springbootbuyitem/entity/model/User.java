@@ -10,6 +10,7 @@ import org.hibernate.annotations.Proxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Proxy(lazy = false)
 @Entity
@@ -18,6 +19,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="USER")
 public class User extends Auditable {
 
     @Id
@@ -29,7 +31,7 @@ public class User extends Auditable {
     private String email;
     @PasswordConstraint
     private String password;
-    /*@OneToMany(mappedBy = "user")
-    private List<Item> items = new ArrayList<>();*/
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Item> items;
 
 }

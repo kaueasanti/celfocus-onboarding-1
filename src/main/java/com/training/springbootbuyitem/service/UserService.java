@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -67,6 +68,11 @@ public class UserService implements IUserService {
             return userRepository.save(persistedUser);
         }
         throw new NullObjectException();
+    }
+
+    @Override
+    public Set<Item> listUserItems(Long id) {
+        return userRepository.getUserItems(id);
     }
 
     @Override
