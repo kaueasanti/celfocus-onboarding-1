@@ -9,10 +9,10 @@ import com.training.springbootbuyitem.error.UserNotFoundException;
 import com.training.springbootbuyitem.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,20 +27,17 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Cacheable("Users")
     public List<User> list() {
         return userRepository.findAll();
     }
 
     @Override
+    @Cacheable("Users")
     public User get(Long id) {
         log.info("Getting user");
         return userRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException(EnumEntity.USER.name(), id));
-    }
-
-    @Override
-    public List<User> get(List<Long> id) {
-        return new ArrayList<>();
     }
 
     @Override

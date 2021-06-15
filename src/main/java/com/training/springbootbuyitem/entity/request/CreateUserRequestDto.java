@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -16,8 +14,8 @@ import javax.validation.constraints.NotEmpty;
 public class CreateUserRequestDto {
 
     @NotEmpty
-    @Getter @Setter private String name;
-    @Getter @Setter private String email;
-    @Getter @Setter private String password;
+    private String name;
+    private String email;
+    private String password;
 
 }

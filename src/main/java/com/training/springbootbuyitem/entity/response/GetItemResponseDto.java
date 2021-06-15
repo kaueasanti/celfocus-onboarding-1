@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetItemResponseDto extends CreateItemResponseDto {
+public class GetItemResponseDto extends CreateItemResponseDto implements Serializable {
 
 	private String name;
 	private String state;

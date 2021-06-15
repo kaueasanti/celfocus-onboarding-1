@@ -16,7 +16,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -33,6 +32,7 @@ public class ItemService implements IItemService {
     private RestTemplate restTemplate;
 
     @Override
+    @Cacheable("Items")
     public List<Item> list() {
         return itemRepository.findAll();
     }
@@ -44,15 +44,9 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public List<Item> get(List<Long> id) {
-        return new ArrayList<>();
-    }
-
-    @Override
     public void delete(Long id) {
         itemRepository.delete(get(id));
     }
-
 
     @Override
     public Item update(Item item) {
