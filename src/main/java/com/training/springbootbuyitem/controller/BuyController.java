@@ -111,16 +111,6 @@ public class BuyController implements IBuyController {
 	}
 
 	@Override
-	@ServiceOperation("blockItem")
-	@RequestMapping(value = "/{id}/{user}/block", method = RequestMethod.POST, produces = "application/json")
-	public ResponseEntity<HttpStatus> blockItemForUser(@PathVariable("id") Long id, @PathVariable("user") Long userId,
-			@RequestBody DispatchItemRequestDto request) {
-			itemService.block(id, request.getQuantity());
-			return new ResponseEntity<>(HttpStatus.OK);
-
-	}
-
-	@Override
 	@PostMapping("/{id}/restock")
 	@ServiceOperation("restockItem")
 	public ResponseEntity<HttpStatus> restockItem(@PathVariable("id") Long id,

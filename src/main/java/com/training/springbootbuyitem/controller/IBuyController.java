@@ -52,11 +52,6 @@ public interface IBuyController {
 	ResponseEntity<HttpStatus> blockItem(@PathVariable("id") Long id,
                                             @RequestBody DispatchItemRequestDto request);
 
-	@PostMapping("/{id}/{user}/blockItemForUser")
-	@ServiceOperation("blockItemForUser")
-	ResponseEntity<HttpStatus> blockItemForUser(@PathVariable("id") Long id, @PathVariable("user") Long userId,
-                                            @RequestBody DispatchItemRequestDto request);
-
 	@PostMapping("/{id}/restock")
 	@ServiceOperation("restockItem")
 	ResponseEntity<HttpStatus> restockItem(@PathVariable("id") Long id,

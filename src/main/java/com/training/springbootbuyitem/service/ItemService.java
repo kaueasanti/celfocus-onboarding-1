@@ -7,6 +7,7 @@ import com.training.springbootbuyitem.error.EntityNotFoundException;
 import com.training.springbootbuyitem.error.NullObjectException;
 import com.training.springbootbuyitem.error.StockNotAvailableException;
 import com.training.springbootbuyitem.repository.ItemRepository;
+import com.training.springbootbuyitem.repository.UserRepository;
 import com.training.springbootbuyitem.utils.properties.ItemStorageProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class ItemService implements IItemService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    public ItemService() {}
 
     @Override
     @Cacheable("Items")
